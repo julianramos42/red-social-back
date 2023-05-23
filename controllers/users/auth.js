@@ -13,7 +13,7 @@ const controller = {
         req.body.verify_code = Crypto.randomBytes(10).toString('hex')
         req.body.password = bcryptjs.hashSync(req.body.password, 10)
         try {
-            const user = await User.create(req.body)
+            await User.create(req.body)
 
             return res.status(201).json({
                 succes: true,
