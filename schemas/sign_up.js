@@ -5,23 +5,12 @@ const schema = Joi.object({
     .string()
     .required()
     .min(3)
-    .max(20)
+    .max(30)
     .messages({
     "string.min": "The name must have at least 3 characteres",
-    "string.max": "The name must have a maximum of 20 characteres",
+    "string.max": "The name must have a maximum of 30 characteres",
     'string.empty': 'The name cannot be empty',
     'any.required': 'A name is required',
-  }),
-  last_name: Joi
-    .string()
-    .required()
-    .min(3)
-    .max(20)
-    .messages({
-    "string.min": "The last name must have at least 3 characteres",
-    "string.max": "The last name must have a maximum of 20 characteres",
-    'string.empty': 'The last name cannot be empty',
-    'any.required': 'A last name is required',
   }),
   email: Joi
     .string()

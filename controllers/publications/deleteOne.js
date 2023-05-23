@@ -13,10 +13,7 @@ export default async function deleteOne(req,res,next){
             success: false,
             message: 'No post found'
         })
-    }catch{
-        return res.status(404).json({
-            success: false,
-            message: 'No post found'
-        })
+    }catch(err){
+        next(err)
     }
 }

@@ -17,7 +17,7 @@ export default async function get_all(req,res,next){
             success: false,
             message: 'No posts found'
         })
-    }catch{
+    }catch(err){
         next(err)
     }
 }

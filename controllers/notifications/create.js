@@ -1,12 +1,11 @@
-import Publication from '../../models/Publication.js'
+import Notification from '../../models/Notification.js'
 
 export default async function create(req,res,next){
     try{
-        req.body.user_id = req.user.id
-        await Publication.create(req.body)
+        await Notification.create(req.body)
         return res.status(201).json({
             success: true,
-            message: 'Publication Posted!'
+            message: 'Request Sended!'
         })
     }catch(err){
         next(err)
