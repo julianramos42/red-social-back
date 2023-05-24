@@ -1,10 +1,8 @@
 import Notification from '../../models/Notification.js'
 
-export default async function get_all(req,res,next){
+export default async function get_me(req,res,next){
     try{
-        let notifications1 = await Notification.find({user_id1: req.user.id}).populate('user_id1 user_id2')
-        let notifications2 = await Notification.find({user_id2: req.user.id}).populate('user_id1 user_id2')
-        let notifications = notifications1.concat(notifications2)
+        let notifications = await Notification.find({user_id2: req.user.id}).populate('user_id1')
         
         if(notifications){
             return res.status(200).json({
