@@ -7,6 +7,7 @@ import app from '../app.js'
 import debug from 'debug'
 const logger = debug('red-social-back:server')
 import http from 'http'
+import { Server } from 'socket.io'
 
 /**
  * Get port from environment and store in Express.
@@ -88,3 +89,37 @@ function onListening() {
     : 'port ' + addr.port;
   logger('Listening on ' + bind);
 }
+
+const io = new Server(server, {
+  cors: {
+      origin: 'https://jr-red-social.vercel.app/chats',
+      methods: ['GET', 'POST']
+  }
+});
+
+const userSockets = [];
+io.on('connection', (socket) => {
+    socket.on('user Connect', (userId) => {
+        userSockets[userId] = socket.id;
+    });
+
+    socket.on('chat message', (msg) => {
+        const senderId = socket.id;
+        const recipientId = msg.receiver;
+
+        const recipientSocketId = userSockets[recipientId];
+
+        if (recipientSocketId) {
+            io.to(recipientSocketId).emit('message received', msg);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        const userId = Object.keys(userSockets).find(
+            (key) => userSockets[key] === socket.id
+        );
+        if (userId) {
+            delete userSockets[userId];
+        }
+    });
+});
