@@ -11,21 +11,33 @@ export default async function get_all(req,res,next){
         let uniqueIds = [...new Set(ids)]
         
         let publications = ''
+        let cantPublications = ''
+
+        let pagination = { page: 1, limit: 10}
+        if (req.query.page) {
+            pagination.page = Number(req.query.page)
+        }
 
         if(uniqueIds.length){
             publications = await Publication.find({user_id: {$in: uniqueIds}})
             .sort({createdAt: -1})
+            .limit(pagination.limit > 0 ? pagination.limit*pagination.page : 0)
             .populate('user_id', 'name last_name photo')
+
+            cantPublications = await Publication.countDocuments({user_id: {$in: uniqueIds}})
         }else{
             publications = await Publication.find({user_id: req.user.id})
             .sort({createdAt: -1})
             .populate('user_id', 'name last_name photo')
+
+            cantPublications = await Publication.countDocuments({user_id: req.user.id})
         }
         
         if(publications){
             return res.status(200).json({
                 success: true,
-                publications
+                publications,
+                cantPublications
             })
         }
         return res.status(404).json({

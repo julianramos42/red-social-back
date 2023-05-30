@@ -7,6 +7,7 @@ const schema_signin = Joi.object({
     .messages({
       'string.empty': 'The email cannot be empty',
       'any.required': 'A email is required',
+      'string.email': 'Must be a valid email'
     }),
   password: Joi
     .string()
