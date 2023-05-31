@@ -8,7 +8,9 @@ const controller = {
     sign_up: async (req, res, next) => {
         req.body.is_online = false
         req.body.is_admin = false
-        // req.body.photo = "https://png.pngtree.com/png-vector/20191003/ourmid/pngtree-cyber-man-icon-isolated-on-abstract-background-png-image_1779361.jpg"
+        if(!req.body.photo){
+            req.body.photo = "https://png.pngtree.com/png-vector/20191003/ourmid/pngtree-cyber-man-icon-isolated-on-abstract-background-png-image_1779361.jpg"
+        }
         req.body.is_verified = true
         req.body.verify_code = Crypto.randomBytes(10).toString('hex')
         req.body.password = bcryptjs.hashSync(req.body.password, 10)

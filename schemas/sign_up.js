@@ -15,6 +15,7 @@ const schema = Joi.object({
   photo: Joi
     .string()
     .required()
+    .allow('')
     .min(8)
     .uri()
     .messages(
