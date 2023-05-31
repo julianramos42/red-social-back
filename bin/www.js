@@ -92,7 +92,7 @@ function onListening() {
 
 const io = new Server(server, {
   cors: {
-      origin: 'https://jr-red-social.vercel.app',
+      origin: 'https://jr-red-social.vercel.app/',
       methods: ['GET', 'POST']
   }
 });
@@ -100,7 +100,6 @@ const io = new Server(server, {
 const userSockets = [];
 io.on('connection', (socket) => {
     socket.on('user Connect', (userId) => {
-      console.log('User Conected')
         userSockets[userId] = socket.id;
     });
 
@@ -111,7 +110,6 @@ io.on('connection', (socket) => {
         const recipientSocketId = userSockets[recipientId];
 
         if (recipientSocketId) {
-            console.log('New Message')
             io.to(recipientSocketId).emit('message received', msg);
         }
     });
