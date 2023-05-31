@@ -100,6 +100,7 @@ const io = new Server(server, {
 const userSockets = [];
 io.on('connection', (socket) => {
     socket.on('user Connect', (userId) => {
+      console.log('User Conected')
         userSockets[userId] = socket.id;
     });
 
