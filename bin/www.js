@@ -92,7 +92,7 @@ function onListening() {
 
 const io = new Server(server, {
   cors: {
-      origin: 'https://jr-red-social.vercel.app' || 'http://localhost:3000',
+      origin: 'https://jr-red-social.vercel.app',
       methods: ['GET', 'POST']
   }
 });
